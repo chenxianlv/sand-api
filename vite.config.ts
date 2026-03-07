@@ -1,7 +1,7 @@
-import { resolve } from "node:path";
-import { defineConfig } from "vite";
-import dts from "vite-plugin-dts";
-import pkg from "./package.json";
+import { resolve } from 'node:path';
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
+import pkg from './package.json';
 
 const external = [
   ...Object.keys((pkg as any)?.dependencies ?? {}),
@@ -10,16 +10,23 @@ const external = [
 
 export default defineConfig({
   build: {
-    outDir: "dist",
-    target: "esnext",
+    outDir: 'dist',
+    target: 'esnext',
     lib: {
-      entry: resolve(import.meta.dirname, "src/index.ts"),
-      formats: ["es", "cjs"],
-      fileName: (format) => `index.${format === "es" ? "js" : "cjs"}`,
+      entry: resolve(import.meta.dirname, 'src/index.ts'),
+      formats: ['es', 'cjs'],
+      fileName: format => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
       external,
     },
   },
-  plugins: [dts()],
+  plugins: [
+    dts({
+      tsconfigPath: './tsconfig.build.json',
+      entryRoot: 'src',
+      outDir: 'dist',
+      insertTypesEntry: true,
+    }),
+  ],
 });
