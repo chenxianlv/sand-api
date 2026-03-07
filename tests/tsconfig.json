@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "sand-api": ["src/index"]
+    }
+  },
+  "include": ["./**/*.ts", "../src/**/*.ts"]
+}
